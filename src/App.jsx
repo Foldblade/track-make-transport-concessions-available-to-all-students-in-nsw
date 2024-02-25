@@ -75,7 +75,7 @@ function App() {
       </div>
 
       <div>
-        United, NSW international students! <br />
+        United, international students in NSW! <br />
         Sign for{" "}
         <a href="https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w">
           Make transport concessions available to all students in NSW
