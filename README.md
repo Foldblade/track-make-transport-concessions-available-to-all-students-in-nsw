@@ -1,6 +1,8 @@
-# Track Make transport concessions available to all students in NSW
+# Track "Make transport concessions available to all students in NSW" ePetition
 
-Track the number of ePetition signers.
+Track the number of ePetition signers. You can view the statistical charts [here](https://foldblade.github.io/track-make-transport-concessions-available-to-all-students-in-nsw/).
+
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Foldblade/track-make-transport-concessions-available-to-all-students-in-nsw/crawler.yml) ![Website](https://img.shields.io/website?url=https%3A%2F%2Ffoldblade.github.io%2Ftrack-make-transport-concessions-available-to-all-students-in-nsw%2F)
 
 ---
 
