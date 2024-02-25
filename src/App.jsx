@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import "@material/web/button/filled-button.js";
 import { Line } from "@ant-design/plots";
+import { Liquid } from "@ant-design/plots";
 import rawData from "./data.json5";
 import { QRCodeSVG } from "qrcode.react";
 
 function App() {
   const [data, setData] = useState([]);
+  const [percent, setPercent] = useState(0.0);
 
   useEffect(() => {
     let newData = [];
+    let percent = 0;
     for (let i = 0; i < rawData.length; i++) {
       let time = new Date(rawData[i].time).toLocaleString();
       newData.push({
@@ -18,7 +21,9 @@ function App() {
         Aim: 20000,
       });
     }
+    percent = newData[newData.length - 1].Signatories / 20000;
     setData(newData);
+    setPercent(percent);
   }, []);
 
   const config = {
@@ -61,6 +66,14 @@ function App() {
     ],
   };
 
+  const config_liquid = {
+    percent: percent,
+    style: {
+      outlineBorder: 4,
+      outlineDistance: 8,
+      waveLength: 128,
+    },
+  };
   const endTime = new Date("2024-03-07 23:59:59");
   const nowTime = new Date();
   const endDiff = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
@@ -70,8 +83,11 @@ function App() {
 
   return (
     <main>
-      <div class="chart">
+      <div class="chart line">
         <Line {...config} autoFit="true" />
+      </div>
+      <div class="chart liquid">
+        <Liquid {...config_liquid} width={200} height={200} />
       </div>
 
       <div>
