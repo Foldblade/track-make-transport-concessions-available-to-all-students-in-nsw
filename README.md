@@ -1,8 +1,11 @@
-# React + Vite
+# Track Make transport concessions available to all students in NSW
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Track the number of ePetition signers.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Sign for [Make transport concessions available to all students in NSW](https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w)!
+
+签署[向新南威尔士州所有学生提供交通优惠](https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w)电子请愿书！
+
+簽署[向新南威爾斯州所有學生提供交通優惠](https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w)電子請願書！
