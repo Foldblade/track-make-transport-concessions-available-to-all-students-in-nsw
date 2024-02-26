@@ -5,6 +5,7 @@ import { Line } from "@ant-design/plots";
 import { Liquid } from "@ant-design/plots";
 import rawData from "./data.json5";
 import { QRCodeSVG } from "qrcode.react";
+import { format } from "fecha";
 
 function App() {
   const [data, setData] = useState([]);
@@ -14,7 +15,7 @@ function App() {
     let newData = [];
     let percent = 0;
     for (let i = 0; i < rawData.length; i++) {
-      let time = new Date(rawData[i].time).toLocaleString();
+      let time = new Date(rawData[i].time);
       newData.push({
         Time: time,
         Signatories: parseInt(rawData[i].cnt),
@@ -29,39 +30,68 @@ function App() {
   const config = {
     data,
     xField: "Time",
-    legend: true,
-    children: [
-      {
-        type: "line",
-        yField: "Aim",
-        style: {
-          lineWidth: 3,
-          lineDash: [5, 5],
-        },
+    yField: "Signatories",
+    axis: {
+      y: {
+        labelAutoHide: true,
+        labelAutoRotate: true,
+        title: false,
       },
+    },
+    label: {
+      text: (datum) => `${datum.Signatories}`,
+      dx: -20,
+      dy: -20,
+      textAnchor: "middle",
+      selector: "last",
+    },
+    // children: [
+    //   {
+    //     type: "line",
+    //     yField: "Signatories",
+    //     shapeField: "smooth",
+    //     style: {
+    //       stroke: "#5AD8A6",
+    //       lineWidth: 4,
+    //       opacity: 0.5,
+    //     },
+    //     label: {
+    //       text: (datum) => `${datum.Signatories}`,
+    //       position: "left-top",
+    //       selector: (data) => {
+    //         if (data.length) {
+    //           return data.filter((d, index) => index === 3);
+    //         }
+    //         return data;
+    //       },
+    //     },
+    //     axis: {
+    //       y: {
+    //         position: "right",
+    //         title: "Signatories",
+    //         style: { titleFill: "#5AD8A6" },
+    //       },
+    //     },
+    //   },
+    // ],
+    scale: {
+      x: {
+        type: "time",
+      },
+      // y: { nice: true },
+    },
+    slider: {
+      x: {
+        values: [0.8, 1.0],
+        labelFormatter: (d) => format(d, "shortTime"),
+      },
+      y: { values: [0.8, 1.0], labelFormatter: "~s" },
+    },
+    annotations: [
       {
-        type: "line",
-        yField: "Signatories",
-        shapeField: "smooth",
-        style: {
-          stroke: "#5AD8A6",
-          lineWidth: 4,
-          opacity: 0.5,
-        },
-        label: {
-          text: (datum) => `${datum.Signatories}`,
-          style: {
-            dy: -10,
-            textAnchor: "middle",
-          },
-        },
-        axis: {
-          y: {
-            position: "right",
-            title: "Signatories",
-            style: { titleFill: "#5AD8A6" },
-          },
-        },
+        type: "lineY",
+        yField: 20000,
+        style: { stroke: "#F4664A", strokeOpacity: 1, lineWidth: 5 },
       },
     ],
   };
@@ -77,7 +107,6 @@ function App() {
   const endTime = new Date("2024-03-07 23:59:59");
   const nowTime = new Date();
   const endDiff = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
-  // 剩余时间
   const leftTime = endDiff > 0 ? endDiff : 0;
   const days_left = parseInt(leftTime / (24 * 60 * 60));
 
