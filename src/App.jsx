@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import "./App.css";
-import "@material/web/button/filled-button.js";
-import { Line } from "@ant-design/plots";
-import { Liquid } from "@ant-design/plots";
 import rawData from "./data.json5";
-import { QRCodeSVG } from "qrcode.react";
-import { format } from "fecha";
+import i18n from "./i18n.cjs";
+import { Card, Flex, QRCode, Col, Row } from "antd";
+import MyLiquid from "./chart/Liquid";
+import MyLine from "./chart/Line";
+import LanguageDropDown from "./component/LanguageDropDown";
+import { Trans, useTranslation } from "react-i18next";
 
 function App() {
+  const { t, i18n } = useTranslation();
   const [data, setData] = useState([]);
   const [percent, setPercent] = useState(0.0);
 
@@ -27,95 +29,19 @@ function App() {
     setPercent(percent);
   }, []);
 
-  const config = {
-    data,
-    xField: "Time",
-    yField: "Signatories",
-    axis: {
-      y: {
-        labelAutoHide: true,
-        labelAutoRotate: true,
-        title: false,
-      },
-    },
-    label: {
-      text: (datum) => `${datum.Signatories}`,
-      dx: -20,
-      dy: -20,
-      textAnchor: "middle",
-      selector: "last",
-    },
-    // children: [
-    //   {
-    //     type: "line",
-    //     yField: "Signatories",
-    //     shapeField: "smooth",
-    //     style: {
-    //       stroke: "#5AD8A6",
-    //       lineWidth: 4,
-    //       opacity: 0.5,
-    //     },
-    //     label: {
-    //       text: (datum) => `${datum.Signatories}`,
-    //       position: "left-top",
-    //       selector: (data) => {
-    //         if (data.length) {
-    //           return data.filter((d, index) => index === 3);
-    //         }
-    //         return data;
-    //       },
-    //     },
-    //     axis: {
-    //       y: {
-    //         position: "right",
-    //         title: "Signatories",
-    //         style: { titleFill: "#5AD8A6" },
-    //       },
-    //     },
-    //   },
-    // ],
-    scale: {
-      x: {
-        type: "time",
-      },
-      // y: { nice: true },
-    },
-    slider: {
-      x: {
-        values: [0.8, 1.0],
-        labelFormatter: (d) => format(d, "shortTime"),
-      },
-      y: { values: [0.8, 1.0], labelFormatter: "~s" },
-    },
-    annotations: [
-      {
-        type: "lineY",
-        yField: 20000,
-        style: { stroke: "#F4664A", strokeOpacity: 1, lineWidth: 5 },
-      },
-    ],
-  };
-
-  const config_liquid = {
-    percent: percent,
-    style: {
-      outlineBorder: 4,
-      outlineDistance: 8,
-      waveLength: 128,
-    },
-  };
+  const ePetitionUrl =
+    "https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w";
   const endTime = new Date("2024-03-07 23:59:59");
   const nowTime = new Date();
   const endDiff = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
   const leftTime = endDiff > 0 ? endDiff : 0;
-  const days_left = parseInt(leftTime / (24 * 60 * 60));
-
+  const daysLeft = parseInt(leftTime / (24 * 60 * 60));
   return (
     <>
       <a
         href="https://github.com/Foldblade/track-make-transport-concessions-available-to-all-students-in-nsw/"
         className="github-corner"
-        aria-label="View source on GitHub"
+        aria-label={t("vsogithub")}
       >
         <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
           <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -133,34 +59,43 @@ function App() {
         </svg>
       </a>
       <main>
-        <div className="container">
-          <div className="chart line">
-            <Line {...config} autoFit="true" />
-          </div>
-          <div className="chart liquid">
-            <Liquid {...config_liquid} width={200} height={200} />
-          </div>
+        <Row gutter={[16, 16]}>
+          <Col xs={24}>
+            <LanguageDropDown />
+          </Col>
+          <Col xs={24}>
+            <Card>
+              <MyLine data={data} />
+            </Card>
+          </Col>
+          <Col xs={24} xl={{ span: 16, offset: 4 }}>
+            <Flex gap="middle" align="center" vertical>
+              <Flex justify="space-between" align="center" gap="middle" wrap>
+                <QRCode value={{ ePetitionUrl }} height="200" width="200" />
+                <MyLiquid percent={percent} width={200} height={200} />
+              </Flex>
+              <div>
+                {t("united")} {t("i11lStuNsw")}
+                <br />
+                <Trans i18nKey="signFor">
+                  Sign for{" "}
+                  <a href={ePetitionUrl}>
+                    Make transport concessions available to all students in NSW
+                  </a>
+                  !
+                </Trans>
+              </div>
+              <div>{t("daysLeft", { count: daysLeft })}</div>
 
-          <div>
-            United, international students in NSW! <br />
-            Sign for{" "}
-            <a href="https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w">
-              Make transport concessions available to all students in NSW
-            </a>
-            !
-          </div>
-          <div>
-            <QRCodeSVG
-              value="https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w"
-              includeMargin="true"
-            />
-          </div>
-          <div>Only {days_left} Day(s) left</div>
-          <div>Fetch data every five minutes</div>
-          <div>
-            Thanks <b>Jet Hunt</b> who created this ePetition.
-          </div>
-        </div>
+              <div>{t("fdefm")}</div>
+              <div>
+                <Trans i18nKey="thanks">
+                  Thanks <strong>Jet Hunt</strong> who created this ePetition.
+                </Trans>
+              </div>
+            </Flex>
+          </Col>
+        </Row>
       </main>
     </>
   );
