@@ -10,13 +10,21 @@ let data = require("./data.json5");
 
 async function main() {
   let new_data = await fetchData();
-  data.push(new_data);
-  fs.writeFile(__dirname + "/" + "data.json5", JSON5.stringify(data), (err) => {
-    if (err) {
-      throw err;
+  if (new_data != null) {
+    data.push(new_data);
+  } else {
+    console.log("Null new data");
+  }
+  fs.writeFile(
+    __dirname + "/" + "data.json5",
+    JSON5.stringify(data, null, 2),
+    (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log("JSON data is saved.");
     }
-    console.log("JSON data is saved.");
-  });
+  );
 }
 
 main();
