@@ -7,11 +7,15 @@ import MyLiquid from "./chart/Liquid";
 import MyLine from "./chart/Line";
 import LanguageDropDown from "./component/LanguageDropDown";
 import { Trans, useTranslation } from "react-i18next";
+import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
 
 function App() {
   const { t, i18n } = useTranslation();
   const [data, setData] = useState([]);
   const [percent, setPercent] = useState(0.0);
+  const { width, height } = useWindowSize();
+  const [runConfetti, setRunConfetti] = useState(false);
 
   useEffect(() => {
     let newData = [];
@@ -27,6 +31,12 @@ function App() {
     percent = newData[newData.length - 1].Signatories / 20000;
     setData(newData);
     setPercent(percent);
+    if (newData[newData.length - 1].Signatories >= 20000) {
+      setRunConfetti(true);
+      // setInterval(() => {
+      //   setRunConfetti(false);
+      // }, 5000);
+    }
   }, []);
 
   const ePetitionUrl =
@@ -58,6 +68,12 @@ function App() {
           ></path>
         </svg>
       </a>
+      <Confetti
+        width={width}
+        height={height}
+        run={runConfetti}
+        recycle={false}
+      />
       <main>
         <Row gutter={[16, 16]}>
           <Col xs={24}>
