@@ -8,8 +8,9 @@ on:
   #     - master
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  repository_dispatch:
-    types: [sign]
+  # Trigger from a repository_dispatch event (you may use curl or the GitHub API to trigger this event manually)
+  # repository_dispatch:
+  #   types: [sign]
 
 # Sets the GITHUB_TOKEN permissions to allow deployment to GitHub Pages
 permissions:

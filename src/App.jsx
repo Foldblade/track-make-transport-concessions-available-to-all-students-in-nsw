@@ -41,7 +41,7 @@ function App() {
 
   const ePetitionUrl =
     "https://www.parliament.nsw.gov.au/la/Pages/ePetition-details.aspx?q=tabuKTP7hWgVFy0qTdhC7w";
-  const endTime = new Date("2024-03-07 23:59:59");
+  const endTime = new Date("2024-03-07 13:00:00");
   const nowTime = new Date();
   const endDiff = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
   const leftTime = endDiff > 0 ? endDiff : 0;
