@@ -87,7 +87,7 @@ function App() {
           <Col xs={24} xl={{ span: 16, offset: 4 }}>
             <Flex gap="middle" align="center" vertical>
               <Flex justify="space-between" align="center" gap="middle" wrap>
-                <QRCode value={{ ePetitionUrl }} height="200" width="200" />
+                <QRCode value={ePetitionUrl} height="200" width="200" />
                 <MyLiquid percent={percent} width={200} height={200} />
               </Flex>
               <div>
