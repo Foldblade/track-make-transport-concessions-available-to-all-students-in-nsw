@@ -64,7 +64,7 @@ on:
     types: [sign]
 ```
 
-Using crontab (and replace the UPPERCASE_VARIABLES_TO_YOURS) to feach data every 5 mins:
+Using crontab (and replace the UPPERCASE_VARIABLES_TO_YOURS) to fetch data every 5 mins:
 
 ```
 */5 * * * * /usr/bin/curl --request POST --url 'https://api.github.com/repos/YOUR_USER_NAME/YOUR_REPO_NAME/dispatches' --header 'authorization: Bearer YOUR_REPO_ACCESS_TOKEN' --data '{"event_type": "sign"}'
@@ -72,6 +72,6 @@ Using crontab (and replace the UPPERCASE_VARIABLES_TO_YOURS) to feach data every
 
 Notice that `--data '{"event_type": "sign"}'` == `repository_dispatch.types`.
 
-`src/data.json5` maybe very large - but feaching every 5 minutes for the last 10 days is still acceptable.
+`src/data.json5` maybe very large - but fetching every 5 minutes for the last 10 days is still acceptable.
 
 And I don’t know the specific end time of ePetition - seems 1 P.M. of the end date.
